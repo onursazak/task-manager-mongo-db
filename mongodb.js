@@ -19,26 +19,12 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     //check the docs for update operators ($set, $inc ...)
 
-    // db.collection('users').updateOne({
-    //     _id: new ObjectID('5f4d5b0c1d14a12448282c35')
-    // }, {
-    //     // to incremenet age field by 2.
-    //     $inc: {
-    //         age: 2
-    //     }
-    // }).then((result) => {
-    //     console.log(result)
-    // }).catch((error) => {
-    //     console.log(error)
-    // })
-
-    db.collection('newTask').updateMany({
-        completed: false
-    }, {
-        $set: {
-            completed: true
-        }
+    //deleteOne or deleteMany can be used
+    db.collection('users').deleteOne({
+        age: 14
     }).then((result) => {
         console.log(result)
-    }).catch((error) => console.log(error));
+    }).catch((error) => {
+        console.log(error)
+    })
 })
