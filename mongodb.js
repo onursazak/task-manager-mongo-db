@@ -9,37 +9,36 @@ const { MongoClient, ObjectID } = require('mongodb');
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'task-manager'
 
-// const id = new ObjectID()
-// const time = id.getTimestamp();
-// console.log(id);
-// console.log(time);
-
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
+
     if (error) {
         return console.log('Unable to connect to database')
     }
 
     const db = client.db(databaseName);
 
-    // db.collection('users').findOne({ name: 'Jen'}, (error, user) => {
-    //     if(error) {
-    //         return console.log('Unable to fetch');
+    //check the docs for update operators ($set, $inc ...)
+
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID('5f4d5b0c1d14a12448282c35')
+    // }, {
+    //     // to incremenet age field by 2.
+    //     $inc: {
+    //         age: 2
     //     }
-    //     console.log(user);
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error) => {
+    //     console.log(error)
     // })
 
-    // it returns only first occurence.
-    // db.collection('users').findOne({ _id: new ObjectID("5f529ae5d96f04125849719b")}, (error, user) => {
-    //     if(error) {
-    //         return console.log('Unable to fetch');
-    //     }
-    //     console.log(user);
-    // })
-
-    // find returns 'cursor' not a data itself.
-    // it returns all occurences contains Jen.
-    db.collection('users').find({name: 'Jen'}).toArray((error, users) => {
-        console.log(users);
-    });
-
+    db.collection('newTask').updateMany({
+        completed: false
+    }, {
+        $set: {
+            completed: true
+        }
+    }).then((result) => {
+        console.log(result)
+    }).catch((error) => console.log(error));
 })
