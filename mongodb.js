@@ -9,10 +9,10 @@ const { MongoClient, ObjectID } = require('mongodb');
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'task-manager'
 
-const id = new ObjectID()
-const time = id.getTimestamp();
-console.log(id);
-console.log(time);
+// const id = new ObjectID()
+// const time = id.getTimestamp();
+// console.log(id);
+// console.log(time);
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
     if (error) {
@@ -21,54 +21,25 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
     const db = client.db(databaseName);
 
-    // db.collection('users').insertOne({
-    //     // _id: id, // we can define id if we want. Mongodb creates id by default
-    //     name: 'ali3',
-    //     age: 26
-    // }, (error, result) => {
-    //     if (error) {
-    //         return console.log('Unable to insert user');
-    //     }
-
-    //     console.log(result.ops);
-    // })
-
-    // db.collection('users').insertMany([
-    //     {
-    //         name: 'Jen',
-    //         age: 28        
-    //     },
-    //     {
-    //         name: 'Gunther',
-    //         age: 27
-    //     }
-    // ], (error, result) => {
+    // db.collection('users').findOne({ name: 'Jen'}, (error, user) => {
     //     if(error) {
-    //         return console.log(error)
+    //         return console.log('Unable to fetch');
     //     }
-
-    //     console.log(result.ops);
+    //     console.log(user);
     // })
 
-    // db.collection('newTask').insertMany([
-    //     {
-    //         description: 'Homework',
-    //         completed: false
-    //     },
-    //     {
-    //         description: 'kitchen cleaning',
-    //         completed: false
-    //     },
-    //     {
-    //         description: 'shopping',
-    //         completed: true
+    // it returns only first occurence.
+    // db.collection('users').findOne({ _id: new ObjectID("5f529ae5d96f04125849719b")}, (error, user) => {
+    //     if(error) {
+    //         return console.log('Unable to fetch');
     //     }
-    // ], (error, result) => {
-    //     if (error) {
-    //         return console.log(error)
-    //     }
-
-    //     console.log(result.ops);
+    //     console.log(user);
     // })
+
+    // find returns 'cursor' not a data itself.
+    // it returns all occurences contains Jen.
+    db.collection('users').find({name: 'Jen'}).toArray((error, users) => {
+        console.log(users);
+    });
 
 })
