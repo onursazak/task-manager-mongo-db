@@ -32,7 +32,7 @@ app.get('/users/:id', (req, res) => {
     const _id = req.params.id;
 
     User.findById(_id).then((user) => {
-        if(!user) {
+        if (!user) {
             return res.status(404).send();
         }
         res.send(user);
@@ -40,8 +40,8 @@ app.get('/users/:id', (req, res) => {
     }).catch((e) => {
         // if length of id is less than 12 , mongoose throw an cast error.Thus, it it will return 500 status code instead of 404.
         // to prevent this we can use isValid check.
-        if (!mongoose.Types.ObjectId.isValid(req.params.id)){
-            return res.status(400).send({error: 'Invalid ID!'})
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).send({ error: 'Invalid ID!' })
         }
         res.status(500).send();
     })
@@ -57,6 +57,30 @@ app.post('/tasks', (req, res) => {
         res.status(201).send(task);
     }).catch((error) => {
         res.status(400).send(error);
+    })
+})
+
+app.get('/tasks', (req, res) => {
+    Task.find({}).then((tasks) => {
+        res.send(tasks);
+    }).catch((e) => {
+        res.status(500).send();
+    })
+})
+
+app.get('/tasks/:id', (req, res) => {
+    const _id = req.params.id;
+    
+    Task.findById(_id).then((task) => {
+
+        if (!task) {
+            return res.status(404).send();
+        }
+
+        res.send(task);
+
+    }).catch((error) => {
+        res.status(500).send();
     })
 })
 
