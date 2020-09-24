@@ -12,8 +12,8 @@ router.post('/users', async (req, res) => {
     } catch (error) {
         res.status(400).send(error);
     }
-
-})
+    
+});
 
 router.get('/users', async (req, res) => {
 
@@ -24,7 +24,7 @@ router.get('/users', async (req, res) => {
         res.status(500).send();
     }
 
-})
+});
 
 router.get('/users/:id', async (req, res) => {
     const _id = req.params.id;
@@ -38,7 +38,7 @@ router.get('/users/:id', async (req, res) => {
     } catch (error) {
         res.status(500).send();
     }
-})
+});
 
 router.patch('/users/:id', async (req, res) => {
 
@@ -63,7 +63,7 @@ router.patch('/users/:id', async (req, res) => {
     catch (error) {
         res.status(400).send(error);
     }
-})
+});
 
 router.delete('/users/:id', async(req, res) => {
     
@@ -80,6 +80,6 @@ router.delete('/users/:id', async(req, res) => {
     } catch(error) {
         res.status(500).send(error);
     }
-})
+});
 
 module.exports = router;
