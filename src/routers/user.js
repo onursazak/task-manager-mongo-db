@@ -19,7 +19,9 @@ router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
-
+        
+        //when we pass object into res.send, it implicitly call JSON.stringify.
+        //toJSON method gets called. (in /models/user.js)
         res.send({ user: user, token });
     } catch (e) {
         res.status(400).send();
@@ -48,7 +50,7 @@ router.get('/users/:id', async (req, res) => {
 router.post('/users/logout', auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.token;
+            return token.token !== req.token;   
         });
 
         await req.user.save();
