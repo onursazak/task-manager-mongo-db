@@ -49,6 +49,12 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+});
+
 // to hide data.
 userSchema.methods.toJSON = function() {
     const user = this;
@@ -58,7 +64,7 @@ userSchema.methods.toJSON = function() {
     delete userObject.tokens;
 
     return userObject;
-}
+};
 
 // methods: are accessible on instances. aka instance methods.
 userSchema.methods.generateAuthToken = async function() {
