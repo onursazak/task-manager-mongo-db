@@ -81,7 +81,8 @@ router.patch('/users/me', auth, async (req, res) => {
 });
 
 const upload = multer({
-    dest: 'avatars'
+    //destination to save the file.
+    dest: 'avatars' 
 })
 
 router.post('/users/me/avatar', upload.single('avatar') , (req,res) => {
